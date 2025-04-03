@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crazy Club Tournament - Battle Royale Event">
+    <title>Crazy Club Tournament</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+            scroll-behavior: smooth;
+        }
+        .hero {
+            height: 100vh;
+            background-image: url('your-tournament-image.jpg'); /* Replace with actual image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 60px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .cta-button {
+            padding: 15px 30px;
+            background-color: #e60012;
+            color: #fff;
+            border: none;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.5s ease-in-out;
+            display: none;
+            opacity: 0;
+        }
+        .cta-button:hover {
+            background-color: #f22d42;
+        }
+
+        /* Details Section */
+        .section {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, box-shadow 0.5s ease-in-out;
+            padding: 20px;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        .section.highlight {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .image-gallery img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal for Image Zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal img {
+            width: 50%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .footer {
+            background-color: #222;
+            padding: 20px;
+        }
+        .social-links a {
+            color: #e60012;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Crazy Club Tournament</h1>
+            <p>The ultimate Battle Royale competition - Solo, Duo, Squad!</p>
+            <p>Get ready for an intense battle with exciting rewards.</p>
+            <p>Stay tuned for details on rules, leaderboard, and live streaming.</p>
+            <button class="cta-button" id="register-button" onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSdQfswkJQibV_JjNzqhilYaA5_M-8U1wkcdQ5b5-FSJ5Sq68g/viewform?usp=dialog'">Register Now</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tournament Highlights</h2>
+        <div class="image-gallery">
+            <img src="t1.jpg" alt="Tournament Highlight 1" onclick="openModal(this)">
+            <img src="t2.jpg" alt="Tournament Highlight 2" onclick="openModal(this)">
+            <img src="t3.jpg" alt="Tournament Highlight 3" onclick="openModal(this)">
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Leaderboard</h2>
+        <p>Stay updated with the latest rankings!</p>
+    </div>
+
+    <div class="section">
+        <h2>Rules & Guidelines</h2>
+        <p>
+            <b>1. Define the Tournament Format</b><br>
+            Type: Solo, Duo, or Squad<br>
+            Mode:battal royal<br><br>
+
+            <b>2. Set the Rules & Guidelines</b><br>
+            Fair Play: No cheating, hacking, or unfair advantages<br>
+         <br>
+ <br>
+
+            <b>8. Execute the Tournament</b><br>
+            Share lobby ID and password before each match<br>
+            Ensure smooth coordination and resolve disputes fairly<br><br>
+
+        </p>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Crazy Club Tournament</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/crazy_club_tournament" target="_blank">Instagram</a>
+            <a href="your-twitter-link" target="_blank">Twitter</a>
+            <a href="https://www.youtube.com/@crazyclub124" target="_blank">YouTube</a>
+        </div>
+    </div>
+
+    <div class="modal" id="image-modal" onclick="closeModal()">
+        <img id="modal-image" src="">
+    </div>
+
+    <script>
+        // Show sections and register button after 2s
+        setTimeout(() => {
+            let button = document.getElementById('register-button');
+            button.style.display = 'inline-block';
+            setTimeout(() => button.style.opacity = '1', 500);
+
+            document.querySelectorAll('.section').forEach((section) => {
+                section.style.display = 'block';
+                setTimeout(() => section.style.opacity = '1', 100);
+            });
+        }, 2000);
+
+        // Open image modal
+        function openModal(imgElement) {
+            let modal = document.getElementById('image-modal');
+            let modalImg = document.getElementById('modal-image');
+            modal.style.display = 'flex';
+            modalImg.src = imgElement.src;
+        }
+
+        // Close image modal
+        function closeModal() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
